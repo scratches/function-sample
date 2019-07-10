@@ -18,32 +18,49 @@ package com.example;
 
 import java.util.function.Function;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.function.context.FunctionRegistration;
-import org.springframework.cloud.function.context.FunctionType;
-import org.springframework.cloud.function.context.FunctionalSpringApplication;
-import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.GenericApplicationContext;
 
 // @checkstyle:off
-@SpringBootApplication
-public class SampleApplication implements ApplicationContextInitializer<GenericApplicationContext> {
+@SpringBootApplication(proxyBeanMethods = false)
+public class SampleApplication {
 
 	public static void main(String[] args) throws Exception {
-		FunctionalSpringApplication.run(SampleApplication.class, args);
-	}
-
-	@Override
-	public void initialize(GenericApplicationContext context) {
-		context.registerBean("uppercase", FunctionRegistration.class, () -> new FunctionRegistration<>(uppercase())
-				.type(FunctionType.from(String.class).to(String.class).getType()));
+		SpringApplication.run(SampleApplication.class, args);
 	}
 
 	@Bean
-	public Function<String, String> uppercase() {
-		return value -> value.toUpperCase();
+	public Function<Foo, Foo> uppercase() {
+		return value -> new Foo(value.getValue().toUpperCase());
 	}
 
 }
 // @checkstyle:on
+
+
+class Foo {
+
+    private String value;
+
+    public Foo() {
+    }
+
+    public Foo(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return this.value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Foo [value=" + this.value + "]";
+    }
+
+}

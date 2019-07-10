@@ -1,5 +1,10 @@
 [
 	{
+		"name": "com.example.Foo",
+		"allDeclaredConstructors": true,
+		"allDeclaredMethods": true
+	},
+	{
 		"name": "org.springframework.cloud.function.web.StringConverter",
 		"allDeclaredConstructors": true,
 		"allDeclaredMethods": true

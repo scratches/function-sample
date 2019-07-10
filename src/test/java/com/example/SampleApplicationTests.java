@@ -31,7 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SampleApplicationTests {
 
 	@Autowired
-	private Function<String, String> uppercase;
+	private Function<Foo, Foo> uppercase;
 
 	@Test
 	public void contextLoads() {
@@ -39,8 +39,8 @@ public class SampleApplicationTests {
 
 	@Test
 	public void testUppercase() {
-		String output = this.uppercase.apply("foobar");
-		assertThat(output).isEqualTo("FOOBAR");
+		Foo output = this.uppercase.apply(new Foo("foobar"));
+		assertThat(output.getValue()).isEqualTo("FOOBAR");
 	}
 
 }

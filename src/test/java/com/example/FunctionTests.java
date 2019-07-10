@@ -26,8 +26,8 @@ public class FunctionTests {
 
 	@Test
 	public void testUppercase() {
-		String output = this.functions.uppercase().apply("foobar");
-		assertThat(output).isEqualTo("FOOBAR");
+		Foo output = this.functions.uppercase().apply(new Foo("foobar"));
+		assertThat(output.getValue()).isEqualTo("FOOBAR");
 	}
 
 }

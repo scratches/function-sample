@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.cloud.function.context.test.FunctionalSpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -31,7 +31,7 @@ import reactor.core.publisher.Mono;
  * @author Dave Syer
  */
 @RunWith(SpringRunner.class)
-@FunctionalSpringBootTest
+@SpringBootTest
 @AutoConfigureWebTestClient
 public class SampleApplicationWebTests {
 
@@ -40,8 +40,8 @@ public class SampleApplicationWebTests {
 
 	@Test
 	public void uppercase() throws Exception {
-		this.client.post().uri("/uppercase").contentType(MediaType.TEXT_PLAIN).body(Mono.just("foo"), String.class)
-				.exchange().expectBody(String.class).value(value -> value.contains("FOO"));
+		this.client.post().uri("/uppercase").contentType(MediaType.APPLICATION_JSON).body(Mono.just("{\"value\":\"foo\"}"), String.class)
+				.exchange().expectBody(Foo.class).value(value -> value.getValue().contains("FOO"));
 	}
 
 }
